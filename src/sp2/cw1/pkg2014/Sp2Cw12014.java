@@ -11,20 +11,19 @@ import java.util.Scanner;
 
 
 public class Sp2Cw12014 {
-
+    
+    final static int ARRSIZE = 100;                                             // Constant containing the size of our arrays 
+    final static int SENTINEL = 0;                                              // Sentinel to terminate loops
+    
+    
     /**
-     * Given two arrays of integers, you are required 
-     * to perform some array operations. You have to 
+     * Given two arrays of integers 
      * print the values which occur in both arrays, those 
      * which occur only in the first array, and those 
      * which occur only in the second.
      * 
      * @param args the command line arguments (not used)
      */
-    
-    final static int ARRSIZE = 100;                                             // Constant containing the size of our arrays 
-    final static int SENTINEL = 0;                                              // Sentinel to terminate loops
-    
     public static void main(String[] args) {
         
         /* Declare and set global variables and constants */ 
@@ -48,19 +47,47 @@ public class Sp2Cw12014 {
         
         
         /* Display results */
-        System.out.print("Values for Array One: ");                             // Tell user we are displaying array one elements
-        displayElements(arrOne);                                                // Display elements in array one
-        System.out.println();                                                   // Line break
+        if(arrayIsEmpty(arrOne) && arrayIsEmpty(arrTwo)) {                      // Check both arrays have values, if they are:
         
-        System.out.print("Values for Array Two: ");                             // Tell user we are displaying array two elements                  
-        displayElements(arrTwo);                                                // Display elemenets in array two
-        System.out.println();                                                   // Line break
-        
-        displayCommon(arrOne, arrTwo);                                          // Display common data
-        
+            System.out.println("Both arrays are empty");                         // Inform user and terminate program
+
+        }
+        else{                                                                   // If at least one array has values
+            
+            if(arrayIsEmpty(arrOne)){                                           // Check if array one is empty, if it is
+                System.out.println("Array One is empty");                       // Inform user array is empty 
+            }
+            else{                                                               // If the array has values:
+                System.out.print("Values for Array One: ");                     // Tel l user we are displaying array one elements
+                displayElements(arrOne);                                        // Display elements in array one
+                System.out.println();                                           // Line break
+            }
+            
+            if(arrayIsEmpty(arrTwo)){                                           // Check if array two is empry, if it is:
+                System.out.println("Array Two is empty");                       // Inform user array is empty
+            }
+            else{                                                               // If the array has values
+                System.out.print("Values for Array Two: ");                     // Tell user we are displaying array two elements                  
+                displayElements(arrTwo);                                        // Display elemenets in array two
+                System.out.println();                                           // Line break
+            }
+            
+            displayCommon(arrOne, arrTwo);                                      // Display common data
+            
+        }
     }
     
     
+    
+    /**
+    * Accept user input to populate an array with integers.
+    * <p>
+    * As Java passes array references, this method will not return a value
+    * but rather modify the array directly.
+    * 
+    * @param  arrIn the array to be populated
+    * @param  arrNumIn the number of the array (as to be display to the user)
+    */
     public static void fillArray(int[] arrIn, int arrNumIn) {
         
         /* Declare variables / object needed */
@@ -85,6 +112,18 @@ public class Sp2Cw12014 {
         
     }
     
+    
+    
+    /**
+    * Check if a value already exists in a given array
+    * <p>
+    * Cycles through an array to check if an identical value already exists
+    * in that array
+    * 
+    * @param  arrIn     the array to be checked
+    * @param  elementIn the value to check for in the array
+    * @return           true if element does not already exist in the array
+    */
     public static boolean elementUnique(int[] arrIn, int elementIn) {
         
         /* Set variables */
@@ -103,17 +142,36 @@ public class Sp2Cw12014 {
     }
     
     
+    
+    /**
+    * Check if a value already exists in a given array
+    * <p>
+    * Cycles through an array to check if an identical value already exists
+    * in that array
+    * 
+    * @param  arrIn     the array to be checked
+    */
     public static void displayElements(int[] arrIn) {
         
-        for(int e : arrIn) {
-            if(e != 0) {
-                System.out.print(e + " ");
+        for(int e : arrIn) {                                                    // Loop through each element in the array
+            if(e != 0) {                                                        // Check that the element is not zero
+                System.out.print(e + " ");                                      // Then display the element on screen
             }
         }
         
     }
     
     
+    
+    /**
+    * Compare two arrays and display the values that are common to both and
+    * the values that are unique to each
+    * <p>
+    * Cycles through an two arrays comparing them.  The values that are unique,
+    * non-unique and the count of unique values are written to the console
+    * @param  arrOneIn  first array to be processed
+    * @param  arrTwoIn  second array to be processed
+    */
     public static void displayCommon(int[] arrOneIn, int[] arrTwoIn) {
         
         /* Declare variables */
@@ -142,30 +200,30 @@ public class Sp2Cw12014 {
                 arrCommon[countCommon] = e;                                     // add to common list
                 countCommon++;                                                  // and increase count of elements in common list
             }
-            else {
-                    arrOneNonCommon[countArrOneNonCommon] = e;                  // If there was not a match
-                    countArrOneNonCommon++;                                     // add element to non-common list
+            else {                                                              // If there was not a match
+                    arrOneNonCommon[countArrOneNonCommon] = e;                  // add element to non-common list
+                    countArrOneNonCommon++;                                     // and increment the counter of non-common elements
                 }
  
         }
         
         
         /* Find unique values in array two */
-        for(int e : arrTwoIn) {
+        for(int e : arrTwoIn) {                                                 // Loop through all values in array two
             
-            match = false;
+            match = false;                                                      // Set match to false as we're checking a new value
             
-            for(int f : arrOneIn) {
+            for(int f : arrOneIn) {                                             // Compare to all values in array one
                 
-                if(e == f) {
-                    match = true;
+                if(e == f) {                                                    // If elements match
+                    match = true;                                               // set match to true
                 }
                 
             }
             
-            if(!match) {
-                    arrTwoNonCommon[countArrTwoNonCommon] = e;
-                    countArrTwoNonCommon++;
+            if(!match) {                                                        // If there was not a match
+                    arrTwoNonCommon[countArrTwoNonCommon] = e;                  // add element to non-common list
+                    countArrTwoNonCommon++;                                     // and increment the counter of non-common elements
                 }
  
         }
@@ -184,6 +242,35 @@ public class Sp2Cw12014 {
         System.out.print("Non-common values for array two are: ");              // Tell user we are displaying non-common elements in array one
         displayElements(arrTwoNonCommon);                                       // Display non-common elemenets in array one
         System.out.println(); 
+        
+    }
+    
+    
+    
+    /**
+    * Check if an integer array contains any values
+    * <p>
+    * Cycles through an array to check at least one element has a value
+    * other than zero (the default value assigned by Java to arrays of 
+    * int datatype)
+    * 
+    * @param  arrIn     the array to be checked
+    * @return           true if array does not have any values other than zero
+    */
+    public static boolean arrayIsEmpty(int[] arrIn) {
+        
+        /* Declare return value */
+        boolean rv = true;                                                      // Set return value to default of false
+        
+        /* Check array for values */
+        for(int e : arrIn) {                                                    // Loop through each value in the arry
+            if(e != 0) {                                                        // If it is not zero,
+                rv = false;                                                     // set return value to true
+            }
+        }
+        
+        /* Return result */
+        return rv;                                                              // Return result to calling function
         
     }
 }
